@@ -4,6 +4,7 @@ import { connectDB } from "./config/db.js";
 import userRouter from "./routes/user.route.js";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import postRouter from "./routes/post.route.js";
 
 dotenv.config();
 const app = express();
@@ -22,6 +23,7 @@ app.use(
 // Routes
 
 app.use("/api/user", userRouter);
+app.use("/api/posts", postRouter);
 
 // Middleware to validate incoming requests
 app.listen(3000, () => {

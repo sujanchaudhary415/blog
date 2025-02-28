@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
-import { FaUserCircle, FaBars, FaTimes, FaBell } from "react-icons/fa";
+import {  FaBars, FaTimes, FaBell } from "react-icons/fa";
 import React from "react";
 
 const Navbar = () => {
@@ -77,7 +77,7 @@ const Navbar = () => {
           </button>
 
           <Link
-            to="/create"
+            to="/createblog"
             className="px-3 py-1 hidden md:block  rounded-lg border-2 border-purple-700"
           >
             Create Blog
@@ -87,12 +87,12 @@ const Navbar = () => {
             onClick={() => setProfileOpen(!profileOpen)}
             className="flex items-center space-x-1"
           >
-            <FaUserCircle size={24} />
+            <img src={user?.profilePicture} className="size-10 rounded-full" alt="" />
           </button>
 
           {/* Profile Dropdown */}
           {profileOpen && (
-            <div className="absolute right-4 mt-54 w-48 z-50 bg-white text-black shadow-lg rounded-lg">
+            <div className="absolute right-4 mt-46 w-48 z-50 bg-white text-black shadow-lg rounded-lg">
               <Link
                 to='/profile'
                 className="block px-4 py-2 hover:bg-gray-200"
@@ -150,7 +150,7 @@ const Navbar = () => {
                 🏠 Home
               </Link>
               <Link
-                to="/create"
+                to="/createblog"
                 className="block text-lg font-semibold hover:text-red-400 transition-all"
               >
                 ✍️ Create Blog

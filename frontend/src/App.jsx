@@ -10,23 +10,26 @@ import AnimePage from "./pages/AnimePage";
 import AnimeDescriptionPage from "./pages/AnimeDescriptionPage";
 import MarvelPage from "./pages/MarvelPage";
 import ProfilePage from "./pages/ProfilePage";
-
+import CreateBlogPage from "./pages/CreateBlogPage";
 
 const App = () => {
-  const { user,checkAuth,isCheckingAuth } = useContext(UserContext);
+  const { user, checkAuth, isCheckingAuth } = useContext(UserContext);
   const location = useLocation(); // Hook to get the current location
 
   // Conditionally render Navbar based on the path
   const showNavbar = !["/login", "/signup"].includes(location.pathname);
 
-  useEffect(()=>{
-     checkAuth();
-  },[])
+  useEffect(() => {
+    checkAuth();
+  }, []);
 
   if (isCheckingAuth) {
-    return <div className="h-screen flex items-center justify-center text-4xl">Loading...</div>; // Show loading spinner while checking auth
+    return (
+      <div className="h-screen flex items-center justify-center text-4xl">
+        Loading...
+      </div>
+    ); // Show loading spinner while checking auth
   }
-
 
   return (
     <div className="relative">
@@ -59,23 +62,36 @@ const App = () => {
           }
         />
 
-<Route
-  path="/profile"
-  element={
-    user ? (
-      <div className="absolute top-1/4 left-1/2 mt-12 transform -translate-x-1/2 w-full max-w-6xl">
-        <ProfilePage />
-      </div>
-    ) : (
-      <Navigate to="/login" />
-    )
-  }
-/>
+        <Route
+          path="/profile"
+          element={
+            user ? (
+              <div className="absolute top-1/4 left-1/2 mt-12 transform -translate-x-1/2 w-full max-w-6xl">
+                <ProfilePage />
+              </div>
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
+        />
+
+        <Route
+          path="/createblog"
+          element={
+            user ? (
+              <div className="absolute top-1/4 left-1/2 mt-12 transform -translate-x-1/2 w-full max-w-6xl">
+                <CreateBlogPage />
+              </div>
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
+        />
 
         {/* HomePage and login/signup redirects */}
         <Route
           path="/"
-          element={user ? <HomePage /> : <Navigate to="/login" />} 
+          element={user ? <HomePage /> : <Navigate to="/login" />}
         />
         <Route
           path="/login"
@@ -83,9 +99,8 @@ const App = () => {
         />
         <Route
           path="/signup"
-          element={!user ? <SignupPage /> : <Navigate to="/" />} 
+          element={!user ? <SignupPage /> : <Navigate to="/" />}
         />
-      
       </Routes>
     </div>
   );
