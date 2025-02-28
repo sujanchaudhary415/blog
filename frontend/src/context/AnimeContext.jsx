@@ -7,7 +7,7 @@ export const AnimeContext = createContext();
 // Provider Component
 export const AnimeProvider = ({ children }) => {
   const [animeList, setAnimeList] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [animeDetails, setAnimeDetails] = useState(null);
 
   // Fetch Anime Data from Jikan API

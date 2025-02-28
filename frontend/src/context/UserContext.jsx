@@ -6,15 +6,22 @@ export const UserContext = createContext();
 
 const UserContextProvider = ({ children }) => {
   const [user, setUser] = useState(null); // Initialize state
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true)
 
   const checkAuth = async () => {
     try {
-      const res = await axiosInstance.get("/user/check");
-      setUser(res.data);
+      const res = await axiosInstance.get("/user/check"); // Ensure `withCredentials` is enabled
+      console.log("Auth Response:", res.data);
+      setUser(res.data); // Store user data if authenticated
+      setIsCheckingAuth(false);
     } catch (error) {
       console.log("Error in auth check", error);
+      setUser(null); // Ensure user state is set to null if not authenticated
+    } finally {
+      setIsCheckingAuth(false);
     }
   };
+  
 
   const registerUser = async (userData) => {
     try {
@@ -70,6 +77,7 @@ const UserContextProvider = ({ children }) => {
         logoutUser,
         updateUserProfile,
         checkAuth,
+        isCheckingAuth,
       }}
     >
       {children}

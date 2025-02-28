@@ -7,7 +7,7 @@ export const MarvelContext = createContext();
 // Provider Component
 export const MarvelProvider = ({ children }) => {
   const [characters, setCharacters] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const publicKey = "789fedca4484fb6baa60ae11043f3353"; // Your public key
@@ -25,7 +25,6 @@ export const MarvelProvider = ({ children }) => {
         const data = await response.json();
         const filteredCharacters = data.data.results.filter(character => character.description && character.description.trim() !== '');
         // Store the API data for reference in other components
-        console.log(filteredCharacters)
         setCharacters(data.data.results); // Store fetched characters
       } catch (error) {
         setError(error); // Store the error if it happens
