@@ -14,9 +14,8 @@ const postSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    imageUrl: {
-      type: String,
-      
+    image: {
+      type:String,
     },
     score: {
       type: String,

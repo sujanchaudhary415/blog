@@ -16,7 +16,6 @@ createRoot(document.getElementById("root")).render(
         <MarvelProvider>
           <AnimeProvider>
             <BlogProvider>
-
               <App />
             </BlogProvider>
           </AnimeProvider>

@@ -7,18 +7,30 @@ const CreateBlogPage = () => {
     synopsis: "",
     aired: "",
     score: "",
-    
   });
+  const [imagePreview, setImagePreview] = useState(null)
 
-  const [imagePreview, setImagePreview] = useState(null);
-  const {createPost}=useContext(BlogContext);
+  const { createPost } = useContext(BlogContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    console.log(formData);
-    createPost(formData);
+  
+    const formDataToSend = new FormData();
+    formDataToSend.append("title", formData.title);
+    formDataToSend.append("synopsis", formData.synopsis);
+    formDataToSend.append("aired", formData.aired);
+    formDataToSend.append("score", formData.score);
     
+    // Append image file if selected
+    if (formData.image) {
+      formDataToSend.append("image", formData.image);
+    }
+  
+    try {
+      await createPost(formDataToSend);  // Send form data using context function
+    } catch (error) {
+      console.error("Error creating post:", error);
+    }
   };
 
   return (
@@ -90,7 +102,6 @@ const CreateBlogPage = () => {
             required
           />
         </div>
-
         <div className="mb-4">
           <label className="block text-gray-700 font-medium mb-2">
             Upload Image
@@ -99,6 +110,13 @@ const CreateBlogPage = () => {
             type="file"
             accept="image/*"
             className="w-full p-2 border rounded-lg"
+            onChange={(e) => {
+              const file = e.target.files[0];
+              if (file) {
+                setFormData({ ...formData, image: file });
+                setImagePreview(URL.createObjectURL(file));  // Set preview
+              }
+            }}
           />
           {imagePreview && (
             <img
@@ -108,7 +126,6 @@ const CreateBlogPage = () => {
             />
           )}
         </div>
-
         <button
           type="submit"
           className="w-full bg-blue-600 text-white p-2 rounded-lg hover:bg-blue-700 transition"
