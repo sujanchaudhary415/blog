@@ -7,6 +7,7 @@ import { BrowserRouter } from "react-router-dom";
 import UserContextProvider from "./context/UserContext";
 import { MarvelProvider } from "./context/MarvelContext";
 import { AnimeProvider } from "./context/AnimeContext.jsx";
+import { BlogProvider } from "./context/BlogContext.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -14,7 +15,10 @@ createRoot(document.getElementById("root")).render(
       <UserContextProvider>
         <MarvelProvider>
           <AnimeProvider>
-            <App />
+            <BlogProvider>
+
+              <App />
+            </BlogProvider>
           </AnimeProvider>
         </MarvelProvider>
       </UserContextProvider>
