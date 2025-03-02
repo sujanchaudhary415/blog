@@ -4,7 +4,6 @@ import jwt from "jsonwebtoken";
 export const protectRoute = async (req, res, next) => {
   try {
     const token = req.cookies.jwt;
-    console.log("Cookies received:", req.cookies);
 
 
     if (!token) {

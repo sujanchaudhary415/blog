@@ -11,6 +11,8 @@ import AnimeDescriptionPage from "./pages/AnimeDescriptionPage";
 import MarvelPage from "./pages/MarvelPage";
 import ProfilePage from "./pages/ProfilePage";
 import CreateBlogPage from "./pages/CreateBlogPage";
+import UserBlogPage from "./pages/UserBlogPage";
+import CreateBlogDescriptionPage from "./pages/CreateBlogDescriptionPage";
 
 const App = () => {
   const { user, checkAuth, isCheckingAuth } = useContext(UserContext);
@@ -63,6 +65,15 @@ const App = () => {
         />
 
         <Route
+          path="/userblog/:id"
+          element={
+            <div className="absolute top-1/4 left-1/2 mt-12 transform -translate-x-1/2 w-full max-w-6xl">
+              <CreateBlogDescriptionPage />
+            </div>
+          }
+        />
+
+        <Route
           path="/profile"
           element={
             user ? (
@@ -100,6 +111,10 @@ const App = () => {
         <Route
           path="/signup"
           element={!user ? <SignupPage /> : <Navigate to="/" />}
+        />
+        <Route
+          path="/userblog"
+          element={user ? <UserBlogPage /> : <Navigate to="/" />}
         />
       </Routes>
     </div>

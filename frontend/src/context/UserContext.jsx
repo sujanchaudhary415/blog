@@ -11,7 +11,6 @@ const UserContextProvider = ({ children }) => {
   const checkAuth = async () => {
     try {
       const res = await axiosInstance.get("/user/check"); // Ensure `withCredentials` is enabled
-      console.log("Auth Response:", res.data);
       setUser(res.data); // Store user data if authenticated
       setIsCheckingAuth(false);
     } catch (error) {

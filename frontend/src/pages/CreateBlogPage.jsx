@@ -28,6 +28,8 @@ const CreateBlogPage = () => {
   
     try {
       await createPost(formDataToSend);  // Send form data using context function
+      setFormData({title:"",synopsis:"",aired:"",score:"",image:""})
+      setImagePreview(null);  // Clear image preview when form is submitted
     } catch (error) {
       console.error("Error creating post:", error);
     }

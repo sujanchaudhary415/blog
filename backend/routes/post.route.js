@@ -1,6 +1,6 @@
 import express from "express";
 import { body } from "express-validator";
-import { createPost } from "../controllers/post.controller.js";
+import { addComment, createPost, fetchPostById, fetchPosts } from "../controllers/post.controller.js";
 import { protectRoute } from "../middlewares/user.middleware.js";
 import upload from './../middlewares/multer.js';
 
@@ -17,5 +17,10 @@ postRouter.post(
   protectRoute,
   createPost
 );
+
+postRouter.get("/get", protectRoute,fetchPosts)
+postRouter.get("/:id", protectRoute,fetchPostById)
+postRouter.post("/:id/comments", protectRoute,addComment)
+
 
 export default postRouter;

@@ -1,11 +1,11 @@
 import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
-import {  FaBars, FaTimes, FaBell } from "react-icons/fa";
+import { FaBars, FaTimes, FaBell } from "react-icons/fa";
 import React from "react";
 
 const Navbar = () => {
-  const { user, setUser,logoutUser } = useContext(UserContext);
+  const { user, setUser, logoutUser } = useContext(UserContext);
   const [menuOpen, setMenuOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const [categoriesOpen, setCategoriesOpen] = useState(false);
@@ -40,10 +40,10 @@ const Navbar = () => {
                   🎌 Anime
                 </Link>
                 <Link
-                  to="/category/comics"
+                  to="/userblog"
                   className="block px-5 py-3 text-gray-700 hover:bg-yellow-500 hover:text-white transition-all duration-200"
                 >
-                  📖 Comics
+                  📖 UserBlog
                 </Link>
               </div>
             )}
@@ -87,16 +87,17 @@ const Navbar = () => {
             onClick={() => setProfileOpen(!profileOpen)}
             className="flex items-center space-x-1"
           >
-            <img src={user?.profilePicture} className="size-10 rounded-full" alt="" />
+            <img
+              src={user?.profilePicture}
+              className="size-10 rounded-full"
+              alt=""
+            />
           </button>
 
           {/* Profile Dropdown */}
           {profileOpen && (
             <div className="absolute right-4 mt-46 w-48 z-50 bg-white text-black shadow-lg rounded-lg">
-              <Link
-                to='/profile'
-                className="block px-4 py-2 hover:bg-gray-200"
-              >
+              <Link to="/profile" className="block px-4 py-2 hover:bg-gray-200">
                 View Profile
               </Link>
               <Link
@@ -156,7 +157,7 @@ const Navbar = () => {
                 ✍️ Create Blog
               </Link>
               <Link
-                to='/profile'
+                to="/profile"
                 className="block text-lg font-semibold hover:text-red-400 transition-all"
               >
                 👤 Profile
