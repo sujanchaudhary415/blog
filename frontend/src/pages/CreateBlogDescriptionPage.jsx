@@ -1,20 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
 import { BlogContext } from "../context/BlogContext";
 import { useParams } from "react-router-dom";
-import { UserContext } from './../context/UserContext';
-import { toast } from 'react-toastify';
+import { UserContext } from "../context/UserContext";
+import { toast } from "react-toastify";
+
 
 const CreateBlogDescriptionPage = () => {
-  const { fetchPostById, idData, loading } = useContext(BlogContext);
+  const { fetchPostById, idData, loading, addComment } =
+    useContext(BlogContext);
   const { id } = useParams();
   const [commentText, setCommentText] = useState("");
-  const { addComment } = useContext(BlogContext);
-  const { user } = useContext(UserContext); // Assuming user context has user data
-
-  // Log the user data
-  useEffect(() => {
-    console.log(user); // This will log the user object to the console
-  }, [user]);
+  const { user } = useContext(UserContext);
 
   // Fetch the blog details using the ID from the URL
   useEffect(() => {
@@ -36,11 +32,12 @@ const CreateBlogDescriptionPage = () => {
       <p className="text-center text-xl font-semibold">No details available.</p>
     );
   }
+  console.log(user)
 
+  // Handle comment submission
   const submitHandler = async (e) => {
     e.preventDefault();
-    if (!commentText) {
-      // Add validation for comment text
+    if (!commentText.trim()) {
       toast.error("Comment cannot be empty!");
       return;
     }
@@ -49,10 +46,10 @@ const CreateBlogDescriptionPage = () => {
       text: commentText,
     };
 
-    // Ensure user data is available and then add the comment
     if (user?._id) {
-      addComment(id, commentData); // Pass the postId and commentData
-      setCommentText(""); // Clear the input after submission
+      await addComment(id, commentData); // Wait for comment to be added
+      setCommentText("");
+      fetchPostById(id); // Refresh comments after submitting
     } else {
       toast.error("You need to be logged in to comment.");
     }
@@ -68,9 +65,9 @@ const CreateBlogDescriptionPage = () => {
         Uploaded By: {idData.createdBy?.name}
         <span>
           <img
-            src={idData.createdBy?.profilePicture}
+            src={user?.profilePicture}
             alt="profile"
-            className="size-6 rounded-full object-cover"
+            className="w-8 h-8 rounded-full object-cover"
           />
         </span>
       </p>
@@ -90,14 +87,15 @@ const CreateBlogDescriptionPage = () => {
         </p>
         <div className="flex items-center justify-center gap-6">
           <p className="mt-2 text-gray-400">
-            total comment: {idData.comments?.length || 0}
+            Total comments: {idData.comments?.length || 0}
           </p>
           <p className="mt-2 text-gray-400">
-            total likes: {idData.likes?.length || 0}
+            Total likes: {idData.likes?.length || 0}
           </p>
         </div>
       </div>
 
+      {/* Comment Form */}
       <div className="w-full md:w-3xl mt-6">
         <form onSubmit={submitHandler} className="flex flex-col">
           <label htmlFor="comment" className="text-gray-800 font-semibold">
@@ -114,6 +112,41 @@ const CreateBlogDescriptionPage = () => {
             Submit
           </button>
         </form>
+      </div>
+
+      {/* Display Comments */}
+      <div className="w-full md:w-3xl mt-8">
+        <h2 className="text-2xl font-bold mb-4">Comments</h2>
+        {idData.comments?.length > 0 ? (
+          <ul className="space-y-4">
+            {idData.comments.map((comment, index) => (
+              <li key={index} className="bg-white p-4 rounded shadow">
+                <div className="flex items-center gap-4 mb-2">
+                  <img
+                    src={
+                      comment.createdBy?.profilePicture ||
+                      "/default-profile.png"
+                    }
+                    alt="Commenter"
+                    className="w-8 h-8 rounded-full object-cover"
+                  />
+                  <div className="flex flex-col">
+                  <span className="font-semibold ">
+                    {comment.createdBy?.name || "Unknown"}
+                  </span>
+                    <span className="text-gray-500">{comment.createdAt.substring(11, 16)}</span>
+                  </div>
+                </div>
+                <p className="text-gray-700">{comment.text}</p>
+                
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="text-gray-500">
+            No comments yet. Be the first to comment!
+          </p>
+        )}
       </div>
     </div>
   );

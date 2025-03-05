@@ -34,6 +34,7 @@ userRouter.post("/logout", logoutUser);
 
 userRouter.get("/check",protectRoute,checkAuth);
 
-userRouter.put("/updateProfile",protectRoute,updateUserProfile)
+userRouter.put("/updateProfile",protectRoute,updateUserProfile);
+
 
 export default userRouter;

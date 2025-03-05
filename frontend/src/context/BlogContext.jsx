@@ -52,19 +52,19 @@ export const BlogProvider = ({ children }) => {
         `/posts/${postId}/comments`,
         commentData
       );
-      toast.success("Comment added successfully!"); // Ensure this line is being hit
-  
+      toast.success("Comment added successfully!"); 
+
       // Update the post data with the new comment in state
       setIdData((prevData) => ({
         ...prevData,
         comments: [...prevData.comments, response.data], // Assuming response.data contains the new comment
       }));
+      console.log(response.data)
     } catch (error) {
       console.error("Error adding comment:", error);
       toast.error(error.response?.data?.message || "Failed to add comment!");
     }
   };
-  
 
   return (
     <BlogContext.Provider

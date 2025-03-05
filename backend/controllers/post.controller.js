@@ -61,7 +61,7 @@ export const fetchPostById = async (req, res) => {
   try {
     const post = await postModel
       .findById(req.params.id)
-      .populate("createdBy", "name email profilePicture");
+      .populate("comments.createdBy", "name email profilePicture");  // Populate commenter details
 
     if (!post) {
       return res.status(404).json({ message: "Post not found" });
@@ -72,6 +72,7 @@ export const fetchPostById = async (req, res) => {
     res.status(500).json({ message: "Server Error" });
   }
 };
+
 
 export const addComment = async (req, res) => {
   try {

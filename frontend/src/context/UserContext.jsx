@@ -65,6 +65,16 @@ const UserContextProvider = ({ children }) => {
       toast.error("Profile update failed!");
     }
   };
+  const fetchUserById = async (userId) => {
+    try {
+      const response = await axiosInstance.get(`/user/${userId}`);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching user:", error);
+      toast.error(error.response?.data?.message || "Failed to fetch user!");
+      return null;
+    }
+  }
 
   return (
     <UserContext.Provider
@@ -77,6 +87,7 @@ const UserContextProvider = ({ children }) => {
         updateUserProfile,
         checkAuth,
         isCheckingAuth,
+        fetchUserById
       }}
     >
       {children}
